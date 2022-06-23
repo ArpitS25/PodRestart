@@ -8,12 +8,16 @@ pipeline {
             }
         }
         stage('DockerTest1'){
-            def dockerHome = tool name: 'docker', type: 'dockerTool'
-            def dockerCMD = "${dockerHome}/bin/docker"
-            sh "${dockerCMD} --version"
+            steps {
+                def dockerHome = tool name: 'docker', type: 'dockerTool'
+                def dockerCMD = "${dockerHome}/bin/docker"
+                sh "${dockerCMD} --version"
+            }   
         }
         stage('DockerTest2'){
-            sh "docker --version"
+            steps {
+                sh "docker --version"
+            }
         }
     }
 }
