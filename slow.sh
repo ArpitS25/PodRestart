@@ -1,6 +1,7 @@
 #!/bin/bash
 
 gcloud auth activate-service-account --key-file=/tmp/serviceacc.json
+gcloud container clusters get-credentials devqa-cluster --zone europe-west1-c --project appointy-test
 
 SLEEP_TIME1="110"
 SLEEP_TIME2="90"
