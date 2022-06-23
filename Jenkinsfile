@@ -3,8 +3,11 @@ node {
         git branch: 'main', url: 'https://github.com/ArpitS25/PodRestart.git'
     }
 
-    stage('DockerTest1'){
-        sh 'docker version'
-        sh 'docker run -itd nginx'
+    stage('BUILD'){
+        withCredentials([string(credentialsId: 'serviceaccount', variable: 'service')]) {
+        sh 'docker --version'
+        sh "cp ${service} . "
+        sh 'pwd; ls'
+        }         
     }
 }
