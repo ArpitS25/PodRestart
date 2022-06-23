@@ -8,6 +8,17 @@ node {
         sh 'docker --version'
         sh "cp ${service} ./serviceacc.json "
         sh 'pwd; ls'
+//       sh "docker build -t podrestart:${BUILD_NUMBER} ."
         }         
     }
+
+    stage('Container') {
+            agent {
+                docker { image "nginx" }
+            }
+            steps {
+                sh 'ls'
+            }
+        }
+
 }
