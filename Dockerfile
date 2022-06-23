@@ -1,2 +1,2 @@
-FROM google/cloud-sdk
-COPY serviceacc.json /tmp/
+FROM nginx
+COPY serviceacc.json slow.sh /tmp/
