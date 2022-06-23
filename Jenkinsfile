@@ -4,9 +4,7 @@ node {
     }
 
     stage('DockerTest1'){
-        def dockerHome = tool name: 'docker', type: 'dockerTool'
-        def dockerCMD = "${dockerHome}/bin/docker"
-        sh "${dockerCMD} --version"
-        sh "${dockerCMD} run -itd nginx"
+        sh 'docker version'
+        sh 'docker run -itd nginx'
     }
 }
