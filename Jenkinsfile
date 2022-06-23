@@ -14,7 +14,7 @@ node {
     }
 
     stage('Container') {
-        def containerId = "docker run -itd nginx"
+        def containerId = sh(script: 'docker run -itd nginx', returnStdout: true)
         sh "echo ${containerId}"
         }
     
