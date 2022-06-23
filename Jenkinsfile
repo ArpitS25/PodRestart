@@ -6,7 +6,7 @@ node {
     stage('BUILD'){
         withCredentials([file(credentialsId: 'serviceaccount', variable: 'service')]) {
         sh 'docker --version'
-        sh "cp ${service} ."
+        sh('cp ${service} .')
         sh 'pwd; ls'
 //       sh "docker build -t podrestart:${BUILD_NUMBER} ."
         }         
