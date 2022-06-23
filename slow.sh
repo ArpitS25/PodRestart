@@ -1,4 +1,7 @@
 #!/bin/bash
+
+gcloud auth activate-service-account --key-file=/tmp/serviceacc.json
+
 SLEEP_TIME1="110"
 SLEEP_TIME2="90"
 echo "Geting Pod Details from Cluster"
