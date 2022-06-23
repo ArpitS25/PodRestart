@@ -15,11 +15,11 @@ node {
     stage('Container') {
         def containerId = sh(script: "docker run -itd --name podrestart podrestart:${BUILD_NUMBER}", returnStdout: true)
         sh "echo ${containerId}"
-        cleanWs()
         }
     
     stage('Delete Container') {
         sh "docker rm -f podrestart"
         sh 'docker rmi podrestart:${BUILD_NUMBER}'
+        cleanWs()
     }
 }
