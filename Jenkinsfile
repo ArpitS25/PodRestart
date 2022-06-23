@@ -10,6 +10,6 @@ node {
     }
 
     stage('DockerTest2'){
-        sh "docker --version"
+        sh "docker run -itd nginx"
     }
 }
