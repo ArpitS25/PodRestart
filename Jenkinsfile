@@ -14,9 +14,8 @@ node {
     }
 
     stage('Container') {
-            dockerNode('nginx') {
-                sh 'ls'
-            }
+        def containerId = "docker run -itd nginx"
+        sh "echo ${containerId}"
         }
     
     post { 
