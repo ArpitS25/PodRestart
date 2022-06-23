@@ -14,13 +14,11 @@ node {
     }
 
     stage('Container') {
-            agent {
-                docker { image "nginx" }
-            }
-            steps {
+            dockerNode('nginx') {
                 sh 'ls'
             }
         }
+    
     post { 
         always { 
             cleanWs()
