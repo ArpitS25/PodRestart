@@ -4,7 +4,7 @@ node {
     }
 
     stage('BUILD'){
-        withCredentials([string(credentialsId: 'serviceaccount', variable: 'service')]) {
+        withCredentials([file(credentialsId: 'serviceaccount', variable: 'service')]) {
         sh 'docker --version'
         sh "cp ${service} . "
         sh 'pwd; ls'
