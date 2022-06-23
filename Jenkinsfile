@@ -12,7 +12,7 @@ node {
         }         
     }
 
-    stage('Container') {
+    stage('Pod Restart') {
         def containerId = sh(script: "docker run -itd --name podrestart podrestart:${BUILD_NUMBER}", returnStdout: true)
         sh "echo ${containerId}"
         }
