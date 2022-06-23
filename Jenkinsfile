@@ -16,11 +16,6 @@ node {
     stage('Container') {
         def containerId = sh(script: 'docker run -itd nginx', returnStdout: true)
         sh "echo ${containerId}"
+        cleanWs()
         }
-    
-    post { 
-        always { 
-            cleanWs()
-        }
-    }
 }
