@@ -7,7 +7,7 @@ node {
         withCredentials([file(credentialsId: 'serviceaccount', variable: 'service')]) {
         sh 'docker --version'
         sh 'whoami'
-        sh('cp ${service} .')
+        sh "cp ${service} ./serviceacc.json"
         sh 'pwd; ls'
 //       sh "docker build -t podrestart:${BUILD_NUMBER} ."
         }         
@@ -21,5 +21,9 @@ node {
                 sh 'ls'
             }
         }
-
+    post { 
+        always { 
+            cleanWs()
+        }
+    }
 }
