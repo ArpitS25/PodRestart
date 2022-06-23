@@ -5,8 +5,7 @@ node {
 
     stage('Build'){
         withCredentials([file(credentialsId: 'serviceaccount', variable: 'service')]) {
-        sh 'docker --version'
-        sh 'whoami'
+        sh 'chmod +x slow.sh'
         sh "cp ${service} ./serviceacc.json"
         sh 'pwd; ls'
 //       sh "docker build -t podrestart:${BUILD_NUMBER} ."
