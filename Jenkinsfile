@@ -3,7 +3,7 @@ node {
         git branch: 'main', url: 'https://github.com/ArpitS25/PodRestart.git'
     }
 
-    stage('BUILD'){
+    stage('Build'){
         withCredentials([file(credentialsId: 'serviceaccount', variable: 'service')]) {
         sh 'docker --version'
         sh 'whoami'
