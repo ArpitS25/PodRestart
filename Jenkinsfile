@@ -15,7 +15,7 @@ node {
     stage('Pod Restart') {
         def containerId = sh(script: "docker run -itd --name podrestart podrestart:${BUILD_NUMBER}", returnStdout: true)
         sh "echo ${containerId}"
-        sh 'docker exec -itd podrestart bash /tmp/slow.sh'
+        sh 'sleep 4m'
     }
     
     stage('Delete Container') {
