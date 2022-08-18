@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cloud auth activate-service-account --key-file=/tmp/serviceaccount4.json
+gcloud auth activate-service-account --key-file=/tmp/serviceaccount4.json
 gcloud container clusters get-credentials staging-production --zone europe-west1-c --project appointy-prod
 #gke_appointy-prod_europe-west1-c_staging-production
 
