@@ -27,4 +27,5 @@ node {
         sh "cat /tmp/output"
         sh 'rm /tmp/output'
         cleanWs()
+    }
 }
