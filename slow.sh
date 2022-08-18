@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cloud auth activate-service-account --key-file=/tmp/serviceaccount.json
+cloud auth activate-service-account --key-file=/tmp/serviceaccount1.json
 gcloud container clusters get-credentials staging-production --zone europe-west1-c --project appointy-prod
 #gke_appointy-prod_europe-west1-c_staging-production
 
@@ -77,4 +77,3 @@ PRINT "Pod delete process finish!"
 rm -rf /tmp/head
 rm -rf /tmp/tail
 PRINT "Thank You for using auto-pod rotaion script for Appointy"
-
