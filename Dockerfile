@@ -1,5 +1,5 @@
 FROM google/cloud-sdk
-ARG podname
+ENV podname nginx
 COPY serviceacc.json slow.sh /tmp/
 RUN chmod +x /tmp/slow.sh
-ENTRYPOINT ["/tmp/slow.sh > /tmp/output"]
+ENTRYPOINT ["/tmp/slow.sh"]
