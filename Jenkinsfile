@@ -24,5 +24,6 @@ node {
     
     stage('Output') {
         sh "cat /tmp/output"
+        sh 'rm /tmp/output'
         cleanWs()
 }
