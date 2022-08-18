@@ -6,7 +6,7 @@ node {
     stage('Build'){
         withCredentials([file(credentialsId: 'appointy_prod_staging-production_service_account', variable: 'service')]) {
         sh "echo $podname"
-        sh "cp ${service} ./serviceaccount2.json"
+        sh "cp ${service} ./serviceaccount3.json"
         sh "docker build -t podrestart:${BUILD_NUMBER} ."
         }         
     }
@@ -20,5 +20,6 @@ node {
     stage('Delete Container') {
         sh "docker rm -f podrestart${BUILD_NUMBER}"
         sh 'docker rmi podrestart:${BUILD_NUMBER}'
+        cleanWs()
     }  
 }
