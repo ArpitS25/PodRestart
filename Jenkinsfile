@@ -4,7 +4,7 @@ node {
     }
 
     stage('Build'){
-        withCredentials([file(credentialsId: 'serviceaccount', variable: 'service')]) {
+        withCredentials([file(credentialsId: 'appointy_prod_staging-production_service_account', variable: 'service')]) {
         sh "cp ${service} ./serviceacc.json"
         sh "docker build --build-arg podname=${podname} -t podrestart:${BUILD_NUMBER} ."
         }         
