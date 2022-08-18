@@ -17,8 +17,12 @@ node {
     }
     
     stage('Delete Container') {
+        sh "docker cp podrestart:/tmp/output /tmp/output"
         sh "docker rm -f podrestart"
         sh 'docker rmi podrestart:${BUILD_NUMBER}'
-        cleanWs()
     }
+    
+    stage('Output') {
+        sh "cat /tmp/output"
+        cleanWs()
 }
