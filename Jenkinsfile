@@ -12,13 +12,13 @@ node {
     }
 
     stage('Pod Restart') {
-        def containerId = sh(script: "docker run -itd -e podname=${podname} --name podrestart podrestart:${BUILD_NUMBER}", returnStdout: true)
+        def containerId = sh(script: "docker run -itd -e podname=${podname} --name podrestart${BUILD_NUMBER} podrestart:${BUILD_NUMBER}", returnStdout: true)
         sh "echo ${containerId}"
         sh 'sleep 4m'
     }
     
     stage('Delete Container') {
-        sh "docker rm -f podrestart"
+        sh "docker rm -f podrestart${BUILD_NUMBER}"
         sh 'docker rmi podrestart:${BUILD_NUMBER}'
     }  
 }
