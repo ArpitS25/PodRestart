@@ -1,42 +1,80 @@
 #!/bin/bash
 
-gcloud auth activate-service-account --key-file=/tmp/serviceacc.json
-gcloud container clusters get-credentials devqa-cluster --zone europe-west1-c --project appointy-test
+cloud auth activate-service-account --key-file=/tmp/serviceacc.json
+gcloud container clusters get-credentials staging-production --zone europe-west1-c --project appointy-prod
+#gke_appointy-prod_europe-west1-c_staging-production
 
+context=gke_appointy-prod_europe-west1-c_staging-production
+namespace=prod
 SLEEP_TIME1="110"
 SLEEP_TIME2="90"
-echo "Geting Pod Details from Cluster"
-echo ""
-echo ""
 
-#gke_appointy-test_europe-west1-c_devqa-cluster
-#nginx
+PRINT () {
+    echo ""
+    echo "######################################"
+    echo "$1"
+    echo "######################################"
+    echo ""
+}
 
-kubectl --context gke_appointy-test_europe-west1-c_devqa-cluster -n infratest get pod | egrep -i 'nginx' | awk '{print $1}'i | head -n 3  >> /tmp/head
-echo  "Current pod Details from Cluster"
-echo ""
-echo "nginx pod"
-echo ""
-echo  "Start pod delete process"
-echo ""
+
+PRINT 'Geting Pod Details from Cluster'
+
+
+
+echo "Counting Number of pods"
+
+podcount=$(kubectl --context $context -n $namespace get pod | egrep -i $podname | awk '{print $1}'i | awk '{print $1}'i | wc -l)
+
+#echo '#########################'
+PRINT "Number of Pod is $podcount"
+#echo '#########################'
+
+temp=$(($podcount%2))
+
+if [ $temp -eq 1 ]
+then
+    headcount=$(($podcount/2))
+    tailcount=$(($podcount - $headcount))
+    kubectl --context $context -n $namespace get pod | egrep -i $podname | awk '{print $1}'i | head -n $headcount >> /tmp/head
+    kubectl --context $context -n $namespace get pod | egrep -i $podname | awk '{print $1}'i | tail -n $tailcount >> /tmp/tail 
+else
+    count=$(($podcount/2))
+    kubectl --context $context -n $namespace get pod | egrep -i $podname | awk '{print $1}'i | head -n $count >> /tmp/head
+    kubectl --context $context -n $namespace get pod | egrep -i $podname | awk '{print $1}'i | tail -n $count >> /tmp/tail
+fi
+     
+
+PRINT "Current pod Details from Cluster"
+
+echo '######### POD ##########'
+cat /tmp/head 
+cat /tmp/tail
+echo '########################'
+
+
+
+PRINT  "Start pod delete process"
+
 #cat /tmp/head
-kubectl --context gke_appointy-test_europe-west1-c_devqa-cluster -n infratest delete pod $(cat /tmp/head)
-sleep ${SLEEP_TIME1}
-echo ""
-echo "New Pod Details from cluster"
-echo ""
-kubectl --context gke_appointy-test_europe-west1-c_devqa-cluster -n infratest get pod | egrep -i 'nginx' | awk '{print $1}'
-echo ""
-echo "New pods status"
-echo ""
-echo "Waiting for pod from cluster"
-echo ""
+if [ -s /tmp/head ]
+then
+    kubectl --context $context -n $namespace delete pod $(cat /tmp/head)
+    sleep ${SLEEP_TIME1}
+fi
+
+#cat /tmp/tail
+kubectl --context $context -n $namespace delete pod $(cat /tmp/tail)
+
+PRINT "New Pod Details from cluster"
+kubectl --context $context -n $namespace get pod | egrep -i $podname | awk '{print $1}'
+
+PRINT "Waiting for pod from cluster"
 sleep ${SLEEP_TIME2}
-kubectl --context gke_appointy-test_europe-west1-c_devqa-cluster -n infratest get pod | egrep -i 'nginx'
-echo ""
-echo "Pod delete process finish!"
-echo ""
+kubectl --context $context -n $namespace get pod | egrep -i $podname
+
+PRINT "Pod delete process finish!"
 rm -rf /tmp/head
 rm -rf /tmp/tail
-echo "Thank You for using auto-pod rotation script for Appointy"
-echo ""
+PRINT "Thank You for using auto-pod rotaion script for Appointy"
+
